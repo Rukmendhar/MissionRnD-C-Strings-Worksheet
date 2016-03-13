@@ -17,7 +17,7 @@ void str_words_in_rev(char *input, int len){
 	int first = 0;
 	int index;
 
-	for (index = 0; index < len; index++)
+	for (index = 0; index < len; index++)//reversing the words eg:like coding=ekil gnidoc 
 	{
 		if (input[index] == ' ')
 		{
@@ -26,9 +26,9 @@ void str_words_in_rev(char *input, int len){
 			first = index + 1;
 		}
 	}
-	reverse(input, first, len - 1);
+	reverse(input, first, len - 1);//reversing last word
 
-	reverse(input, 0, len - 1);
+	reverse(input, 0, len - 1);//swapping letters
 }
 void reverse(char *input, int first, int last)
 {
