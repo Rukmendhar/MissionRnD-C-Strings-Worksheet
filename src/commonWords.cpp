@@ -12,64 +12,99 @@ NOTES: If there are no common words return NULL.
 */
 
 #include <stdio.h>
-
 #include <malloc.h>
 
 #define SIZE 31
 
 char ** commonWords(char *str1, char *str2) {
 
-	int i, j=0, k=0,words,flag=0,l,m=0;
-	char s1[81][81];
-	char s2[81][81];
-	char res[81][81];
-	
+	if (str1 == NULL || str2 == NULL)
+		return NULL;
+
+
+	int i = 0, j = 0, k = 0, l = 0, arr[SIZE / 2], len = 0, resI = 0, Index = 0;
+
+	char **str3 = NULL;
+
+	str3 = (char **)calloc(SIZE / 2, sizeof(char *));
+
+
+	if (str1[i] != ' ' &&i == 0)
+	{
+		arr[k] = i;
+		k++;
+	}
+
+
 	for (i = 0; str1[i]; i++)
 	{
-		if (str1[i] != ' ' || str1[i] != '\0')
-			s1[j][k++] = str1[i];
-		else{
-			s1[j][k] = '\0';
-			j = j + 1;
-			k = 0;
-		}
-	}
-	words = i;
-	j = 0;
-	k = 0;
-	for (i = 0; str2[i]; i++)
-	{
-		if (str2[i] != ' ' || str2[i] != '\0')
-			s2[j][k++] = str2[i];
-		else{
-			s2[j][k] = '\0';
-			j = j + 1;
-			k = 0;
-		}
-	}
-	j = 0;
-	k = 0;
 
-	for (i = 0; words > i; i++)
-	{
-		while (s1[i][j] != '\0')
+
+		if (str1[i] != ' ' && str1[i - 1] == ' ')
 		{
-			if ((s1[i][j] == s2[k][j]) && (flag == 0))
-				flag = 0;
-	
-			else
-				flag = 1;
-			j = j + 1;
+			arr[k] = i; k++;
 		}
-		if (flag == 0)
-		{
-			for (l = 0; l < j; l++)
-			{
-				res[m][l] = s1[i][l];
+
+	}
+
+	// Comparing str1 ,str2
+	while (str2[j])
+	{
+		int count = 0;
+
+		for (i = 0; i < k; i++){
+
+			if (str1[arr[i]] == str2[j]){
+				Index = arr[i];
+
+				while (str1[Index] != ' ' && str2[j] != ' ')
+				{
+
+
+					if (str1[Index++] != str2[j++]){
+						Index = -1; break;
+					}
+				}printf("  ");
+
+				if (Index != -1)     // if any word matches then it will be stored in the "str3" 
+				{
+					int len = Index - arr[i];
+
+					str3[resI] = (char *)calloc(len + 1, sizeof(char));
+
+
+					Index = arr[i];
+
+					while (len--){// to store result in str3
+						str3[resI][l++] = str1[Index++];
+					}
+
+
+					str3[resI][l] = '\0';
+					resI++;
+					l = 0;
+
+					break;
+
+				}
+
 			}
-			m = m + 1;
 		}
+
+		j += ++len;
+		len = 0;
+
+
+
 	}
 
-	return NULL;
+	if (resI == 0)
+	{
+		free(str3);
+		return NULL;
+	}
+
+
+	return str3;
+
 }
